@@ -1,0 +1,66 @@
+///100 Days of RTL///
+
+///Abilash P///
+
+///SR Flipflop Asynchoronous reset///
+
+module sr_flipflop_tb();
+  
+reg S,R, CLK, RST;
+wire Q, QBAR;
+
+  sr_flipflop dut(.RST(RST), .CLK(CLK), .S(S), .R(R), .Q(Q), .QBAR(QBAR));
+  
+initial
+  begin
+    $dumpfile("dump.vcd");
+    $dumpvars(1);
+ end
+  
+initial 
+ begin
+  CLK=0;
+  forever #10 CLK = ~CLK;  
+ end 
+  
+  
+initial 
+  begin 
+    $display("Verification of 01 conditon");
+    RST = 0;
+    S= 0; R= 1;
+    #20;
+    RST = 1;
+    #20;
+    $display("------------------------------");
+    
+    $display("Verification of 11 conditon");
+    RST = 0;
+    S= 1; R= 1;
+    #20;
+    RST = 1;
+    #20;
+    $display("------------------------------");
+    
+    $display("Verification of 10 conditon");
+    RST = 0;
+    S= 1; R= 0;
+    #20;
+    RST = 1;
+    #20;
+    $display("------------------------------");
+    
+    $display("Verification of 00 conditon");
+    RST = 0;
+    S= 0; R= 0;
+    #20;
+    RST = 1;
+    #20;
+    $display("------------------------------");
+    
+    $finish;
+end 
+
+initial
+  $monitor("simtime = %g, CLK = %b, Reset = %b, S = %b, R = %b, Q = %b, QBAR = %b", $time, CLK, RST, S, R, Q, QBAR);
+endmodule
