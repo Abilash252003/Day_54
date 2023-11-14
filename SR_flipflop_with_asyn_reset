@@ -1,0 +1,32 @@
+// Code your design here
+///100 Days of RTL///
+
+///Abilash P///
+
+///SR Flipflop Asynchoronous reset///
+
+module sr_flipflop (RST, CLK, S, R, Q, QBAR);
+  
+  input  RST, CLK, S, R;
+  output reg Q;
+  output wire QBAR;
+  
+  always @(posedge CLK or negedge RST)
+    begin
+      if(!RST)
+        begin
+          case ({S,R})
+            2'b00  : Q = Q;
+            2'b01  : Q = 1'b0;
+            2'b10  : Q = 1'b1;
+            2'b11  : Q = 1'bx;
+            default: Q = Q;
+          endcase
+        end
+      else
+        Q = 1'b0;
+    end
+   
+  assign QBAR = ~Q;
+  
+endmodule
